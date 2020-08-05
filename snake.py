@@ -73,15 +73,20 @@ while run:
 
     key = pygame.key.get_pressed()
 
-    if key[pygame.K_LEFT]:
+    if key[pygame.K_LEFT] and posoki[0] != "right":
         posoki[0] = "left"
-    if key[pygame.K_RIGHT]:
+    if key[pygame.K_RIGHT] and posoki[0] != "left":
         posoki[0] = "right"
-    if key[pygame.K_UP]:
+    if key[pygame.K_UP] and posoki[0] != "down":
         posoki[0] = "up"
-    if key[pygame.K_DOWN]:
+    if key[pygame.K_DOWN] and posoki[0] != "up":
         posoki[0] = "down"
 
+    m = 1
+    while m < len(snake):
+        if snake[0].x == snake[m].x and snake[0].y == snake[m].y:
+            run = False
+        m += 1
 
     Move()
     DrAw(win)
