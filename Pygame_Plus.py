@@ -26,13 +26,14 @@ class color:
 
 
 class Kvadrat(Figura):
-    def __init__(self, x, y, w, h, vel, color):
+    def __init__(self, x, y, w, h, width, vel, color):
         super().__init__(x, y, vel, color)
         self.w = w
         self.h = h
+        self.width = width
 
     def draw(self, win):
-        pygame.draw.rect(win, self.color, (self.x, self.y, self.w, self.h))
+        pygame.draw.rect(win, self.color, (self.x, self.y, self.w, self.h), self.width)
 
 
 class Krag(Figura):
