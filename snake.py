@@ -52,9 +52,11 @@ win = pygame.display.set_mode((width, height))
 
 clock = pygame.time.Clock()
 
+speed = 9
+
 run = True
 while run:
-    clock.tick(9)
+    clock.tick(speed)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
