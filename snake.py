@@ -1,24 +1,89 @@
 import Pygame_Plus as pg_plus
 import pygame
+import random
 
 width, height = 900, 900
 
-snake = [pg_plus.Kvadrat(20, 20, 20, 20, 5, pg_plus.color.pink)]
-
+snake = [pg_plus.Kvadrat(20, 20, 40, 40, 0, 40, pg_plus.color.purple)]
+apple = pg_plus.Krag(450, 450, 10, 0, 0, pg_plus.color.red)
+posoki = ["right"]
 
 pygame.init()
-window = pygame.display.set_mode((width, height))
+
+izqdena = True
+
+def Move():
+    global posoki
+    global snake
+
+
+
+    x = 0
+    while x < len(posoki):
+        if posoki[x] == "left":
+            snake[x].x -= snake[x].vel
+        if posoki[x] == "right":
+            snake[x].x += snake[x].vel
+        if posoki[x] == "up":
+            snake[x].y -= snake[x].vel
+        if posoki[x] == "down":
+            snake[x].y += snake[x].vel
+        x += 1
+
+
+
+def DrAw(win):
+    win.fill(pg_plus.color.black)
+    apple.draw(win)
+    for i in snake:
+        i.draw(win)
+    pygame.display.flip()
+
+
+win = pygame.display.set_mode((width, height))
 
 clock = pygame.time.Clock()
 
 run = True
 while run:
-    clock.tick(3)
+    clock.tick(6)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
 
 
+    if snake[0].x <= apple.x <= (snake[0].x + snake[0].w) and snake[0].y <= apple.y <= (snake[0].y + snake[0].h):
+        apple.x = (random.randrange(40, width) // 40) * 40
+        apple.y = (random.randrange(40, width) // 40) * 40
+        if posoki[len(posoki) - 1] == "left":
+            snake.append(pg_plus.Kvadrat((snake[len(snake) - 1].x + snake[0].w), snake[len(snake) - 1].y, snake[0].w, snake[0].h, snake[0].width, snake[0].vel, snake[0].color))
+        if posoki[len(posoki) - 1] == "right":
+            snake.append(pg_plus.Kvadrat((snake[len(snake) - 1].x - snake[0].w), snake[len(snake) - 1].y, snake[0].w, snake[0].h, snake[0].width, snake[0].vel, snake[0].color))
+        if posoki[len(posoki) - 1] == "up":
+            snake.append(pg_plus.Kvadrat(snake[len(snake) - 1].x, (snake[len(snake) - 1].y + snake[0].h), snake[0].w, snake[0].h, snake[0].width, snake[0].vel, snake[0].color))
+        if posoki[len(posoki) - 1] == "down":
+            snake.append(pg_plus.Kvadrat(snake[len(snake) - 1].x, (snake[len(snake) - 1].y - snake[0].h), snake[0].w, snake[0].h, snake[0].width, snake[0].vel, snake[0].color))
 
+        posoki.append(posoki[len(posoki) - 1])
+
+    i = len(posoki) - 1
+    while i >= 1:
+        posoki[i] = posoki[i - 1]
+        i -= 1
+
+    key = pygame.key.get_pressed()
+
+    if key[pygame.K_LEFT]:
+        posoki[0] = "left"
+    if key[pygame.K_RIGHT]:
+        posoki[0] = "right"
+    if key[pygame.K_UP]:
+        posoki[0] = "up"
+    if key[pygame.K_DOWN]:
+        posoki[0] = "down"
+
+
+    Move()
+    DrAw(win)
 
 pygame.quit()
