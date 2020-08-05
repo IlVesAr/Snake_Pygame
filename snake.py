@@ -2,7 +2,7 @@ import Pygame_Plus as pg_plus
 import pygame
 import random
 
-width, height = 900, 900
+width, height = 920, 920
 
 snake = [pg_plus.Kvadrat(0, 0, 40, 40, 0, 40, pg_plus.color.purple)]
 apple = pg_plus.Krag(450, 450, 10, 0, 0, pg_plus.color.red)
@@ -20,13 +20,13 @@ def Move():
     x = 0
     while x < len(posoki):
         if snake[x].x > width:
-            snake[x].x = 0
+            snake[x].x = -40
         if snake[x].y > height:
-            snake[x].y = 0
-        if snake[x].x < 0:
-            snake[x].x = width - 40
-        if snake[x].y < 0:
-            snake[x].y = height - 40
+            snake[x].y = -40
+        if snake[x].x < -40:
+            snake[x].x = width
+        if snake[x].y < -40:
+            snake[x].y = height
 
         if posoki[x] == "left":
             snake[x].x -= snake[x].vel
@@ -54,7 +54,7 @@ clock = pygame.time.Clock()
 
 run = True
 while run:
-    clock.tick(6)
+    clock.tick(9)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
