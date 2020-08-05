@@ -4,7 +4,7 @@ import random
 
 width, height = 900, 900
 
-snake = [pg_plus.Kvadrat(20, 20, 40, 40, 0, 40, pg_plus.color.purple)]
+snake = [pg_plus.Kvadrat(0, 0, 40, 40, 0, 40, pg_plus.color.purple)]
 apple = pg_plus.Krag(450, 450, 10, 0, 0, pg_plus.color.red)
 posoki = ["right"]
 
@@ -12,14 +12,22 @@ pygame.init()
 
 izqdena = True
 
+
 def Move():
     global posoki
     global snake
 
-
-
     x = 0
     while x < len(posoki):
+        if snake[x].x > width:
+            snake[x].x = 0
+        if snake[x].y > height:
+            snake[x].y = 0
+        if snake[x].x < 0:
+            snake[x].x = width - 40
+        if snake[x].y < 0:
+            snake[x].y = height - 40
+
         if posoki[x] == "left":
             snake[x].x -= snake[x].vel
         if posoki[x] == "right":
@@ -51,10 +59,11 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
+    Move()
 
     if snake[0].x <= apple.x <= (snake[0].x + snake[0].w) and snake[0].y <= apple.y <= (snake[0].y + snake[0].h):
-        apple.x = (random.randrange(40, width) // 40) * 40
-        apple.y = (random.randrange(40, width) // 40) * 40
+        apple.x = (random.randrange(40, width) // 40) * 40 - 20
+        apple.y = (random.randrange(40, width) // 40) * 40 - 20
         if posoki[len(posoki) - 1] == "left":
             snake.append(pg_plus.Kvadrat((snake[len(snake) - 1].x + snake[0].w), snake[len(snake) - 1].y, snake[0].w, snake[0].h, snake[0].width, snake[0].vel, snake[0].color))
         if posoki[len(posoki) - 1] == "right":
@@ -88,7 +97,6 @@ while run:
             run = False
         m += 1
 
-    Move()
     DrAw(win)
 
 pygame.quit()
