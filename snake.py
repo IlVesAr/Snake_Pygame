@@ -65,7 +65,7 @@ while run:
 
     if snake[0].x <= apple.x <= (snake[0].x + snake[0].w) and snake[0].y <= apple.y <= (snake[0].y + snake[0].h):
         apple.x = (random.randrange(40, width) // 40) * 40 - 20
-        apple.y = (random.randrange(40, width) // 40) * 40 - 20
+        apple.y = (random.randrange(40, height) // 40) * 40 - 20
         if posoki[len(posoki) - 1] == "left":
             snake.append(pg_plus.Kvadrat((snake[len(snake) - 1].x + snake[0].w), snake[len(snake) - 1].y, snake[0].w, snake[0].h, snake[0].width, snake[0].vel, snake[0].color))
         if posoki[len(posoki) - 1] == "right":
