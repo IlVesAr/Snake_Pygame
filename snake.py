@@ -86,11 +86,11 @@ while run:
 
     if key[pygame.K_LEFT] and posoki[0] != "right":
         posoki[0] = "left"
-    if key[pygame.K_RIGHT] and posoki[0] != "left":
+    elif key[pygame.K_RIGHT] and posoki[0] != "left":
         posoki[0] = "right"
-    if key[pygame.K_UP] and posoki[0] != "down":
+    elif key[pygame.K_UP] and posoki[0] != "down":
         posoki[0] = "up"
-    if key[pygame.K_DOWN] and posoki[0] != "up":
+    elif key[pygame.K_DOWN] and posoki[0] != "up":
         posoki[0] = "down"
 
     m = 1
