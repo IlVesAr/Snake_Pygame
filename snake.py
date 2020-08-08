@@ -10,8 +10,6 @@ posoki = ["right"]
 
 pygame.init()
 
-izqdena = True
-
 
 def Move():
     global posoki
